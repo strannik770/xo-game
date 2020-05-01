@@ -4,14 +4,25 @@ let table = document.getElementById("game");
 		
 		
 		function doit (event) {
-		
-			if ( event.target.className != "xo-cell" ||  event.target.innerHTML != "" ) return;
-			event.target.innerHTML = "X";
+			let str;
+			let target = event.target;
+			if ( target.className != "xo-cell" ||  target.innerHTML != "" ) return;
+			target.innerHTML = "X";
 			
 			draw();
-			win();	
+			
+			if (win("X") == "X") result.innerHTML = "Победа" ;
 		
-			if (result.innerHTML == "") {
+			if (win("O") == "O") result.innerHTML = "Поражение" ;		
+			if (result.innerHTML != "") table.removeEventListener ("click", doit);
+		}
+	
+	function randomInt(max) {
+		return Math.floor(Math.random() * max);
+	}
+	
+	function penO {
+				if (result.innerHTML == "") {
 				while (true){
 				let x = randomInt(3);
 				let y = randomInt(3);
@@ -22,54 +33,34 @@ let table = document.getElementById("game");
 				break;
 				}
 			}
-			lose();		
-			if (result.innerHTML != "") table.removeEventListener ("click", doit);
-		}
-	
-	function randomInt(max) {
-		return Math.floor(Math.random() * max);
 	}
 	
-	function win (){
-	  if ((document.getElementById('0_0').innerHTML == 'X' 
-		&& document.getElementById('1_1').innerHTML == 'X'
-		&& document.getElementById("2_2").innerHTML == 'X')
-		||(document.getElementById("0_2").innerHTML == 'X' 
-		&& document.getElementById("1_1").innerHTML == 'X' 
-		&& document.getElementById("2_0").innerHTML == 'X')) result.innerHTML = "Победа!!!";		
+	function win (str){
+	  if ((document.getElementById('0_0').innerHTML == str 
+		&& document.getElementById('1_1').innerHTML == str
+		&& document.getElementById("2_2").innerHTML == str)
+		||(document.getElementById("0_2").innerHTML == str 
+		&& document.getElementById("1_1").innerHTML == str
+		&& document.getElementById("2_0").innerHTML == str)) {
+			result.innerHTML = "Победа!!!";
+			return str;
+			}		
 	  
 	  for(let i = 0; i < 3; i++){
 		for (let j = 0; j < 1; j++){
-			if ((document.getElementById(i+"_"+j).innerHTML == 'X' 
-		&& document.getElementById(i+"_"+(j+1)).innerHTML == 'X'
-		&& document.getElementById(i+"_"+(j+2)).innerHTML == 'X')
-		|| (document.getElementById(j+"_"+i).innerHTML == 'X' 
-		&& document.getElementById((j+1)+"_"+i).innerHTML == 'X'
-		&& document.getElementById((j+2)+"_"+i).innerHTML == 'X')) result.innerHTML = "Победа!!!";		
+			if ((document.getElementById(i+"_"+j).innerHTML == str 
+		&& document.getElementById(i+"_"+(j+1)).innerHTML == str
+		&& document.getElementById(i+"_"+(j+2)).innerHTML == str)
+		|| (document.getElementById(j+"_"+i).innerHTML == str 
+		&& document.getElementById((j+1)+"_"+i).innerHTML == str
+		&& document.getElementById((j+2)+"_"+i).innerHTML == str)) {
+			result.innerHTML = "Победа!!!";
+			return str;
+			}				
 		} 	
 	  }		
 	}
-		
-	function lose (){
-	  if ((document.getElementById('0_0').innerHTML == 'O' 
-		&& document.getElementById('1_1').innerHTML == 'O'
-		&& document.getElementById("2_2").innerHTML == 'O')
-		||(document.getElementById("0_2").innerHTML == 'O' 
-		&& document.getElementById("1_1").innerHTML == 'O' 
-		&& document.getElementById("2_0").innerHTML == 'O')) result.innerHTML = "Поражение!";		
-	  
-	  for(let i = 0; i < 3; i++){
-		for (let j = 0; j < 1; j++){
-			if ((document.getElementById(i+"_"+j).innerHTML == 'O' 
-		&& document.getElementById(i+"_"+(j+1)).innerHTML == 'O'
-		&& document.getElementById(i+"_"+(j+2)).innerHTML == 'O')
-		|| (document.getElementById(j+"_"+i).innerHTML == 'O' 
-		&& document.getElementById((j+1)+"_"+i).innerHTML == 'O'
-		&& document.getElementById((j+2)+"_"+i).innerHTML == 'O')) result.innerHTML = "Поражение!";		
-		} 	
-	  }		
-	}
-	
+			
 	function draw (){
 		let count = 0;
 		for (let cell of cells){
