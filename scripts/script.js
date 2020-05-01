@@ -12,7 +12,9 @@ let table = document.getElementById("game");
 			draw();
 			
 			if (win("X") == "X") result.innerHTML = "Победа" ;
-		
+			
+			penO();
+			
 			if (win("O") == "O") result.innerHTML = "Поражение" ;		
 			if (result.innerHTML != "") table.removeEventListener ("click", doit);
 		}
@@ -21,19 +23,20 @@ let table = document.getElementById("game");
 		return Math.floor(Math.random() * max);
 	}
 	
-	function penO {
+	function penO() {
 				if (result.innerHTML == "") {
-				while (true){
-				let x = randomInt(3);
-				let y = randomInt(3);
-				let newId = x+"_"+y;
-				
-				if ( document.getElementById(newId).innerHTML != "") continue;
-				document.getElementById(newId).innerHTML = "O";
-				break;
+					while (true){
+					let x = randomInt(3);
+					let y = randomInt(3);
+					let newId = x+"_"+y;
+					
+					if ( document.getElementById(newId).innerHTML != "") continue;
+					document.getElementById(newId).innerHTML = "O";
+					break;
+					}
 				}
-			}
 	}
+
 	
 	function win (str){
 	  if ((document.getElementById('0_0').innerHTML == str 
