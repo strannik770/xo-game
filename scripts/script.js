@@ -1,66 +1,65 @@
 let table = document.getElementById("game"); 
 		let cells = document.querySelectorAll(".xo-cell");
-		table.addEventListener ("click", doit);
+		table.addEventListener ("click", playGame);
 		
 		
-		function doit (event) {
+		function playGame (event) {
 			let str;
 			let target = event.target;
-			if ( target.className != "xo-cell" ||  target.innerHTML != "" ) return;
-			target.innerHTML = "X";
+			pen(target,"X");
 			
 			draw();
 			
-			if (win("X") == "X") result.innerHTML = "Победа" ;
+			if (isOver("X") == "X") result.innerHTML = "Победа" ;
 			
-			penO();
+			pen(target,"O");
 			
-			if (win("O") == "O") result.innerHTML = "Поражение" ;		
-			if (result.innerHTML != "") table.removeEventListener ("click", doit);
+			if (isOver("O") == "O") result.innerHTML = "Поражение" ;		
+			if (result.innerHTML != "") table.removeEventListener ("click", playGame);
 		}
 	
 	function randomInt(max) {
 		return Math.floor(Math.random() * max);
 	}
 	
-	function penO() {
-				if (result.innerHTML == "") {
-					while (true){
-					let x = randomInt(3);
-					let y = randomInt(3);
-					let newId = x+"_"+y;
-					
-					if ( document.getElementById(newId).innerHTML != "") continue;
-					document.getElementById(newId).innerHTML = "O";
-					break;
-					}
-				}
+	function pen(target,str) {
+
+		if ( str == "X"){
+			if ( target.className != "xo-cell" ||  target.innerHTML != "" ) return;
+			target.innerHTML = "X";
+		}
+		penO(str);
 	}
 
+	function penO(str) {
+		if (result.innerHTML == "" && str == "O") {
+			while (true){
+			let x = randomInt(3);
+			let y = randomInt(3);
+			let newId = x+"_"+y;
+						
+			if ( document.getElementById(newId).innerHTML != "") continue;
+			document.getElementById(newId).innerHTML = "O";
+			break;
+			}
+		}
+	}
 	
-	function win (str){
+	function isOver (str){
 	  if ((document.getElementById('0_0').innerHTML == str 
 		&& document.getElementById('1_1').innerHTML == str
 		&& document.getElementById("2_2").innerHTML == str)
 		||(document.getElementById("0_2").innerHTML == str 
 		&& document.getElementById("1_1").innerHTML == str
-		&& document.getElementById("2_0").innerHTML == str)) {
-			result.innerHTML = "Победа!!!";
-			return str;
-			}		
+		&& document.getElementById("2_0").innerHTML == str)) return str;		
 	  
 	  for(let i = 0; i < 3; i++){
-		for (let j = 0; j < 1; j++){
-			if ((document.getElementById(i+"_"+j).innerHTML == str 
-		&& document.getElementById(i+"_"+(j+1)).innerHTML == str
-		&& document.getElementById(i+"_"+(j+2)).innerHTML == str)
-		|| (document.getElementById(j+"_"+i).innerHTML == str 
-		&& document.getElementById((j+1)+"_"+i).innerHTML == str
-		&& document.getElementById((j+2)+"_"+i).innerHTML == str)) {
-			result.innerHTML = "Победа!!!";
-			return str;
-			}				
-		} 	
+			if ((document.getElementById(i+"_0").innerHTML == str 
+		&& document.getElementById(i+"_1").innerHTML == str
+		&& document.getElementById(i+"_2").innerHTML == str)
+		|| (document.getElementById("0_"+i).innerHTML == str 
+		&& document.getElementById("1_"+i).innerHTML == str
+		&& document.getElementById("2_"+i).innerHTML == str)) return str; 	
 	  }		
 	}
 			
