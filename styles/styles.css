@@ -34,4 +34,27 @@
     background-color: azure;
 }
 
+.menu{
+    position: absolute;
+/*    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+ */   padding: .5em 1.5em .55em;
+    border: solid 1px;
+    border-radius: .5em;
+    z-index: 1;
+}
+.butt {
+    display: inline-block;
+    margin: 0 4px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% sans-serif;
+    padding: .5em 2em .55em;
+    border-radius: .5em;
+    color: #d9eef7;
+    border: solid 1px;
+    background: #0059cd;
+  }
 
