@@ -6,8 +6,8 @@ let xoSettings = {
 }
 
 let cells;
-let table = document.querySelector(".xo-field");
-table.addEventListener("click", playGame);
+let field = document.querySelector(".xo-field");
+field.addEventListener("click", playGame);
 document.getElementById("first").addEventListener("click", choice);
 document.getElementById("second").addEventListener("click", choice);
 
@@ -26,7 +26,7 @@ function playGame(event) {
 	if (isOver(xoSettings.botSide) == xoSettings.botSide) result.innerHTML = "Поражение";
 	if (result.innerHTML == "") draw();
 	if (result.innerHTML != "") {
-		table.removeEventListener("click", playGame); 
+		field.removeEventListener("click", playGame); 
 		newGame();
 	}
 }
@@ -81,7 +81,8 @@ function draw() {
 }
 
 function choice(event) {
-	let field = document.querySelector(".xo-field");
+	field.addEventListener("click", playGame);
+
 	let downField = document.createElement("div");
 	downField.id = "deleteField";
 	field.append(downField);
@@ -98,6 +99,7 @@ function choice(event) {
 		downField.append(document.createElement("br"));
 	}
 	cells = document.querySelectorAll(".xo-cell");
+	
 
 	document.querySelector(".menu").style.visibility = "hidden";
 
@@ -121,9 +123,11 @@ function newGame(){
 	input.className = "xo-newGame";
 	document.querySelector(".xo-field").append(input);
 
+	input.onclick = function() { 
 	document.querySelector(".menu").style.visibility = "visible";
 
 	result.innerHTML = "";
 	deleteField.remove();
 	document.querySelector(".xo-newGame").remove();
+	}
 }
