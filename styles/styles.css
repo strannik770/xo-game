@@ -47,7 +47,7 @@
     z-index: 1;
     visibility : visible;
 }
-.butt {
+.xo-buttom {
     display: inline-block;
     margin: 0 4px;
     outline: none;
@@ -61,3 +61,17 @@
     background: #0059cd;
   }
 
+ .xo-newGame { 
+    margin-top: 20px;
+    margin-left: 30px;
+    display: inline-block;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% sans-serif;
+    padding: .5em 2em .55em;
+    border-radius: .5em;
+    color: #d9eef7;
+    border: solid 1px;
+    background: #4f7ebd;
+  }
