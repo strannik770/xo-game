@@ -1,6 +1,6 @@
 let x = "X";
 let o = "O";
-let table = document.getElementById("game");
+let table = document.querySelector(".xo-field");
 let cells = document.querySelectorAll(".xo-cell");
 table.addEventListener("click", playGame);
 document.getElementById("first").addEventListener("click", choice);
@@ -76,8 +76,18 @@ function draw() {
 }
 
 function choice(event) {
-	let elem = document.createElement("DIV");
-	console.log (elem);
-	elem.background.color = red;
-	elem.append();
+	let field = document.querySelector(".xo-field");
+	field.style.visibility = "visible";
+
+	for (let i = 0; i < 3; i++) {
+		for (let j = 0; j < 3 ; j++){
+			let elem = document.createElement("DIV");
+			elem.className = "xo-cell";
+			elem.id = i + "_" + j; 
+			field.append(elem);
+		}
+		field.append(document.createElement("br"));
+	}
+	document.querySelector(".menu").style.visibility = "hidden";
+	
 }
