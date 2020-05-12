@@ -26,7 +26,7 @@ function playGame(event) {
 	if (result.innerHTML == "") draw();
 
 	if (result.innerHTML != "") {
-		this.removeEventListener("click", playGame); 
+		this.removeEventListener("click", playGame);
 		newGame();
 	}
 }
@@ -99,35 +99,36 @@ function choice(event) {
 		downField.append(document.createElement("br"));
 	}
 	cells = document.querySelectorAll(".xo-cell");
-	
+
 
 	document.querySelector(".menu").style.visibility = "hidden";
 
 	let target = event.target;
-	if (target.id == "second") {
+	if (target.id == "buttonO") {
 		xoSettings.playerSide = "O";
 		xoSettings.botSide = "X";
 		penBot(xoSettings.botSide);
 	}
-	else if (target.id == "first") {
+	else if (target.id == "buttonX") {
 		xoSettings.playerSide = "X";
 		xoSettings.botSide = "O";
 	}
+	console.log(xoSettings); 
 	//	let form = document.querySelector(".menu");
 }
 
-function newGame(){
+function newGame() {
 	let input = document.createElement("input");
 	input.setAttribute("type", "button");
-	input.setAttribute( "value","Начать новую игру");
+	input.setAttribute("value", "Начать новую игру");
 	input.className = "xo-newGame";
 	document.querySelector(".xo-field").append(input);
 
-	input.onclick = function() { 
-	document.querySelector(".menu").style.visibility = "visible";
+	input.onclick = function () {
+		document.querySelector(".menu").style.visibility = "visible";
 
-	result.innerHTML = "";
-	deleteField.remove();
-	document.querySelector(".xo-newGame").remove();
+		result.innerHTML = "";
+		deleteField.remove();
+		document.querySelector(".xo-newGame").remove();
 	}
 }
