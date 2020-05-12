@@ -4,12 +4,11 @@ let xoSettings = {
 	playerSide: "X",
 	botSide: "O",
 }
-
 let cells;
 let field = document.querySelector(".xo-field");
+
 document.getElementById("buttonX").addEventListener("click", choice);
 document.getElementById("buttonO").addEventListener("click", choice);
-
 
 function playGame(event) {
 	let target = event.target;
@@ -81,13 +80,29 @@ function draw() {
 }
 
 function choice(event) {
-	field.addEventListener("click", playGame);
+	createCells();
 
+	let target = event.target;
+	if (target.id == "buttonO") {
+		xoSettings.playerSide = "O";
+		xoSettings.botSide = "X";
+		penBot();
+	} else if (target.id == "buttonX") {
+		xoSettings.playerSide = "X";
+		xoSettings.botSide = "O";
+	}
+
+	field.style.visibility = "visible";
+	document.querySelector(".menu").style.visibility = "hidden";
+
+	field.addEventListener("click", playGame);
+	//	let form = document.querySelector(".menu");
+}
+
+function createCells() {
 	let downField = document.createElement("div");
 	downField.id = "deleteField";
 	field.append(downField);
-
-	field.style.visibility = "visible";
 
 	for (let i = 0; i < xoSettings.height; i++) {
 		for (let j = 0; j < xoSettings.width; j++) {
@@ -99,38 +114,26 @@ function choice(event) {
 		downField.append(document.createElement("br"));
 	}
 	cells = document.querySelectorAll(".xo-cell");
-
-
-	document.querySelector(".menu").style.visibility = "hidden";
-
-	let target = event.target;
-	if (target.id == "buttonO") {
-		xoSettings.playerSide = "O";
-		xoSettings.botSide = "X";
-		penBot(xoSettings.botSide);
-	}
-	else if (target.id == "buttonX") {
-		xoSettings.playerSide = "X";
-		xoSettings.botSide = "O";
-	}
-	//	let form = document.querySelector(".menu");
 }
 
 function newGame() {
+	createButtonNewGame().addEventListener("click", function () {
+		document.querySelector(".menu").style.visibility = "visible";
+		clearGame(this);
+	});
+}
+
+function clearGame(input) {
+	result.innerHTML = "";
+	deleteField.remove();
+	input.remove();
+}
+
+function createButtonNewGame() {
 	let input = document.createElement("input");
 	input.setAttribute("type", "button");
 	input.setAttribute("value", "Начать новую игру");
 	input.className = "xo-newGame";
 	document.querySelector(".xo-field").append(input);
-
-	input.onclick = function () {
-		document.querySelector(".menu").style.visibility = "visible";
-		clearGame ();
-	}
-}
-
-function clearGame () {
-	result.innerHTML = "";
-	deleteField.remove();
-	document.querySelector(".xo-newGame").remove();
+	return input;
 }
