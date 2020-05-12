@@ -7,7 +7,6 @@ let xoSettings = {
 
 let cells;
 let field = document.querySelector(".xo-field");
-field.addEventListener("click", playGame);
 document.getElementById("first").addEventListener("click", choice);
 document.getElementById("second").addEventListener("click", choice);
 
@@ -24,7 +23,8 @@ function playGame(event) {
 	penBot();
 
 	if (isOver(xoSettings.botSide) == xoSettings.botSide) result.innerHTML = "Поражение";
-	if (result.innerHTML == "") draw();
+	else draw();
+	
 	if (result.innerHTML != "") {
 		field.removeEventListener("click", playGame); 
 		newGame();
@@ -44,10 +44,10 @@ function penBot() {
 		while (true) {
 			let x = randomInt(3);
 			let y = randomInt(3);
-			let newId = x + "_" + y;
+			let newCell = document.getElementById(x + "_" + y);
 
-			if (document.getElementById(newId).innerHTML != "") continue;
-			document.getElementById(newId).innerHTML = xoSettings.botSide;
+			if (newCell.innerHTML != "") continue;
+			newCell.innerHTML = xoSettings.botSide;
 			break;
 		}
 	}
