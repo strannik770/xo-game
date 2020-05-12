@@ -7,13 +7,13 @@ let xoSettings = {
 
 let cells;
 let field = document.querySelector(".xo-field");
-document.getElementById("first").addEventListener("click", choice);
-document.getElementById("second").addEventListener("click", choice);
+document.getElementById("buttonX").addEventListener("click", choice);
+document.getElementById("buttonO").addEventListener("click", choice);
 
 
 function playGame(event) {
 	let target = event.target;
-	if (target.className != "xo-cell" || target.innerHTML != "") return;
+
 	pen(target);
 
 	draw();
@@ -23,10 +23,10 @@ function playGame(event) {
 	penBot();
 
 	if (isOver(xoSettings.botSide) == xoSettings.botSide) result.innerHTML = "Поражение";
-	else draw();
-	
+	if (result.innerHTML == "") draw();
+
 	if (result.innerHTML != "") {
-		field.removeEventListener("click", playGame); 
+		this.removeEventListener("click", playGame); 
 		newGame();
 	}
 }
@@ -36,6 +36,7 @@ function randomInt(max) {
 }
 
 function pen(target) {
+	if (target.className != "xo-cell" || target.innerHTML != "") return;
 	target.innerHTML = xoSettings.playerSide;
 }
 
@@ -76,7 +77,6 @@ function draw() {
 	for (let cell of cells) {
 		if (cell.innerHTML != "") count++;
 	}
-	console.log(count);
 	if (count == 9) result.innerHTML = "Ничья!";
 }
 
