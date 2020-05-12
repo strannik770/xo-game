@@ -13,6 +13,7 @@ document.getElementById("buttonO").addEventListener("click", choice);
 
 function playGame(event) {
 	let target = event.target;
+	if (target.className != "xo-cell" || target.innerHTML != "") return;
 
 	pen(target);
 
@@ -36,7 +37,6 @@ function randomInt(max) {
 }
 
 function pen(target) {
-	if (target.className != "xo-cell" || target.innerHTML != "") return;
 	target.innerHTML = xoSettings.playerSide;
 }
 
@@ -113,7 +113,6 @@ function choice(event) {
 		xoSettings.playerSide = "X";
 		xoSettings.botSide = "O";
 	}
-	console.log(xoSettings); 
 	//	let form = document.querySelector(".menu");
 }
 
@@ -126,9 +125,12 @@ function newGame() {
 
 	input.onclick = function () {
 		document.querySelector(".menu").style.visibility = "visible";
-
-		result.innerHTML = "";
-		deleteField.remove();
-		document.querySelector(".xo-newGame").remove();
+		clearGame ();
 	}
+}
+
+function clearGame () {
+	result.innerHTML = "";
+	deleteField.remove();
+	document.querySelector(".xo-newGame").remove();
 }
