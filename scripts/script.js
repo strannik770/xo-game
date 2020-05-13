@@ -18,17 +18,12 @@ function playGame(event) {
 
 	draw();
 
-	if (isOver(xoSettings.playerSide) == xoSettings.playerSide) result.innerHTML = "Победа";
+	if (isOver(xoSettings.playerSide)) endGame("Поздравляю Нео машины повержены");
 
 	penBot();
 
-	if (isOver(xoSettings.botSide) == xoSettings.botSide) result.innerHTML = "Поражение";
-	if (result.innerHTML == "") draw();
-
-	if (result.innerHTML != "") {
-		this.removeEventListener("click", playGame);
-		newGame();
-	}
+	if (isOver(xoSettings.botSide)) endGame("Проснись Нео ты обосрался");
+	draw();
 }
 
 function randomInt(max) {
@@ -59,7 +54,7 @@ function isOver(str) {
 		&& document.getElementById("2_2").innerHTML == str)
 		|| (document.getElementById("0_2").innerHTML == str
 			&& document.getElementById("1_1").innerHTML == str
-			&& document.getElementById("2_0").innerHTML == str)) return str;
+			&& document.getElementById("2_0").innerHTML == str)) return true;
 
 	for (let i = 0; i < xoSettings.width; i++) {
 		if ((document.getElementById(i + "_0").innerHTML == str
@@ -67,16 +62,19 @@ function isOver(str) {
 			&& document.getElementById(i + "_2").innerHTML == str)
 			|| (document.getElementById("0_" + i).innerHTML == str
 				&& document.getElementById("1_" + i).innerHTML == str
-				&& document.getElementById("2_" + i).innerHTML == str)) return str;
+				&& document.getElementById("2_" + i).innerHTML == str)) return true;
 	}
 }
 
 function draw() {
-	let count = 0;
-	for (let cell of cells) {
-		if (cell.innerHTML != "") count++;
+	if (result.innerHTML == "") {
+		let count = 0;
+		console.log (result.innerHTML);
+		for (let cell of cells) {
+			if (cell.innerHTML != "") count++;
+		}
+		if (count == 9) endGame("Силы равны, попробуй снова");
 	}
-	if (count == 9) result.innerHTML = "Ничья!";
 }
 
 function choice(event) {
@@ -134,6 +132,15 @@ function createButtonNewGame() {
 	input.setAttribute("type", "button");
 	input.setAttribute("value", "Начать новую игру");
 	input.className = "xo-newGame";
-	document.querySelector(".xo-field").append(input);
+	document.querySelector("#newGameButton").append(input);
 	return input;
+}
+
+function endGame(message) {
+	result.innerHTML = message;
+	field.removeEventListener("click", playGame);
+	
+	 if (document.querySelector(".xo-newGame")) 
+	 document.querySelector(".xo-newGame").remove();
+	newGame();
 }
